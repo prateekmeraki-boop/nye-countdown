@@ -1,25 +1,50 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   export let text = '00:00:00';
   $: parts = text.split(':');
+
+  let isMobile = false;
+
+  onMount(() => {
+    // Create a media query
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    
+    // Set initial state
+    isMobile = mediaQuery.matches;
+
+    // Listen for changes
+    const handleChange = (e: MediaQueryListEvent) => {
+      isMobile = e.matches;
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  });
 </script>
 
 <div class="countdown-wrapper">
-  <h1 class="countdown-text">{text}</h1>
-
-  <div class="countdown-mobile">
-    {#if text.includes(':')}
-      {#each parts as part}
-        <span class="countdown-part">{part}</span>
-      {/each}
-    {:else}
-      <span class="countdown-part countdown-part-seconds">{text}</span>
-    {/if}
-  </div>
+  {#if isMobile}
+    <!-- MOBILE: Stacked layout -->
+    <div class="countdown-mobile">
+      {#if text.includes(':')}
+        {#each parts as part}
+          <span class="countdown-part">{part}</span>
+        {/each}
+      {:else}
+        <span class="countdown-part countdown-part-seconds">{text}</span>
+      {/if}
+    </div>
+  {:else}
+    <!-- DESKTOP: Single line -->
+    <h1 class="countdown-text">{text}</h1>
+  {/if}
 </div>
 
 <style>
-  /* ============ LAYOUT (DESKTOP DEFAULT) ============ */
-
   .countdown-wrapper {
     position: absolute;
     inset: 0;
@@ -31,6 +56,7 @@
     padding-inline: 4vw;
   }
 
+  /* Desktop layout */
   .countdown-text {
     margin: 0;
     padding: 0;
@@ -45,43 +71,32 @@
     color: #ffffff;
   }
 
+  /* Mobile stacked layout */
   .countdown-mobile {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 
-  /* ============ MOBILE BREAKPOINT (<=767px) ============ */
+  .countdown-part {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 24vw, 10rem);
+    letter-spacing: 0.18em;
+    line-height: 1;
+    color: #ffffff;
+  }
 
-  @media (max-width: 767px) {
-    .countdown-text {
-      display: none;
-    }
-
-    .countdown-mobile {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35em;
-      align-items: stretch;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-    }
-
-    .countdown-part {
-      display: block;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      font-weight: 800;
-      font-size: clamp(3.5rem, 24vw, 10rem);
-      letter-spacing: 0.18em;
-      line-height: 1;
-      color: #ffffff;
-    }
-
-    .countdown-part-seconds {
-      font-size: clamp(5rem, 30vw, 14rem);
-      letter-spacing: 0.12em;
-    }
+  .countdown-part-seconds {
+    font-size: clamp(5rem, 30vw, 14rem);
+    letter-spacing: 0.12em;
   }
 </style>
