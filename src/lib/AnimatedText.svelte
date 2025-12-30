@@ -32,7 +32,7 @@
 
     window.addEventListener('resize', handleResize);
 
-    const targetTime = new Date('2026-01-01T00:00:00Z').getTime();
+    const targetTime = new Date('2026-01-01T00:00:00+05:30').getTime();
 
     const timer = setInterval(() => {
       const now = Date.now();
