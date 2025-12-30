@@ -20,8 +20,8 @@
   },
   "dependencies": {
     "@paper-design/shaders": "^0.0.68",
-    "@paper-design/shaders-react": "^0.0.68",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3"
+    "react-dom": "^19.2.3",
+    "three": "^0.182.0"
   }
 }
