@@ -1,0 +1,112 @@
+/* Global reset / base */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "SF Pro Display", "Segoe UI", sans-serif;
+}
+
+body {
+  background: #111 !important;
+}
+
+/* App layout */
+
+.app-root {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Warp iframe background */
+
+.shader-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  z-index: 0;
+}
+
+/* Countdown layout */
+
+.countdown-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: 1;
+  padding-inline: 4vw;
+}
+
+/* Desktop / base: one big line */
+
+.countdown-text {
+  margin: 0;
+  padding: 0;
+  width: 90vw;
+  max-width: 90vw;
+  font-weight: 800;
+  font-size: clamp(4rem, 18vw, 20rem);
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  color: #ffffff;
+}
+
+/* Mobile stacked container, hidden by default on desktop */
+
+.countdown-mobile {
+  display: none;
+}
+
+/* Mobile breakpoint: hide single line, show stacked parts */
+
+@media (max-width: 767px) {
+  .countdown-wrapper {
+    background: rgba(255, 0, 255, 0.2) !important;
+    outline: 4px solid lime !important;
+  }
+
+  .countdown-text {
+    color: #00ff00 !important;
+    display: none;
+  }
+
+  .countdown-mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35em;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .countdown-part {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-weight: 800;
+    font-size: clamp(3.5rem, 24vw, 10rem);
+    letter-spacing: 0.18em;
+    line-height: 1;
+    color: #ffffff;
+  }
+
+  .countdown-part-seconds {
+    font-size: clamp(5rem, 30vw, 14rem);
+    letter-spacing: 0.12em;
+  }
+}
