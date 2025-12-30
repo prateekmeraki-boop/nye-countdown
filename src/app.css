@@ -12,10 +12,6 @@ body {
     "SF Pro Display", "Segoe UI", sans-serif;
 }
 
-body {
-  background: #111 !important;
-}
-
 /* App layout */
 
 .app-root {
@@ -49,7 +45,7 @@ body {
   padding-inline: 4vw;
 }
 
-/* Desktop / base: one big line */
+/* ============ DEFAULT (DESKTOP) ============ */
 
 .countdown-text {
   margin: 0;
@@ -65,27 +61,19 @@ body {
   color: #ffffff;
 }
 
-/* Mobile stacked container, hidden by default on desktop */
-
 .countdown-mobile {
   display: none;
 }
 
-/* Mobile breakpoint: hide single line, show stacked parts */
+/* ============ MOBILE BREAKPOINT (<=767px) ============ */
 
-@media (max-width: 767px) {
-  .countdown-wrapper {
-    background: rgba(255, 0, 255, 0.2) !important;
-    outline: 4px solid lime !important;
-  }
-
+@media screen and (max-width: 767px) {
   .countdown-text {
-    color: #00ff00 !important;
-    display: none;
+    display: none !important;
   }
 
   .countdown-mobile {
-    display: flex;
+    display: flex !important;
     flex-direction: column;
     gap: 0.35em;
     align-items: stretch;
@@ -97,6 +85,8 @@ body {
   .countdown-part {
     display: block;
     width: 100%;
+    margin: 0;
+    padding: 0;
     text-align: center;
     font-weight: 800;
     font-size: clamp(3.5rem, 24vw, 10rem);
